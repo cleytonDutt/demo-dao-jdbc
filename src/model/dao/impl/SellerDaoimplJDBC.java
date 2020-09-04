@@ -1,4 +1,5 @@
 package model.dao.impl;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,31 +12,30 @@ import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
-public class SellerDaoJDBC implements SellerDao {
+public class SellerDaoimplJDBC implements SellerDao {
 
 	private Connection conn;
 
-	public SellerDaoJDBC(Connection conn) {
+	public SellerDaoimplJDBC(Connection conn) {
 		this.conn = conn;
 	}
 
 	@Override
 	public void insert(Seller obj) {
-		// TODO Auto-generated method stub
-@@ -27,8 +40,39 @@ public void deleteById(Integer id) {
+	}
+//@@ -27,8 +40,39 @@ 
+		
+	public void deleteById(Integer id) {
+	}
 
 	@Override
 	public Seller findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
-					+ "FROM seller INNER JOIN department "
-					+ "ON seller.DepartmentId = department.Id "
-					+ "WHERE seller.Id = ?");
+					"SELECT seller.*,department.Name as DepName " + "FROM seller INNER JOIN department "
+							+ "ON seller.DepartmentId = department.Id " + "WHERE seller.Id = ?");
 
 			st.setInt(1, id);
 			rs = st.executeQuery();
@@ -53,11 +53,9 @@ public class SellerDaoJDBC implements SellerDao {
 				return obj;
 			}
 			return null;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
@@ -65,9 +63,17 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public List<Seller> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	@Override
+	public void update(Seller obj) {
+		
+	}
+
+	@Override
+	public void deletebyId(Integer id) {
+		
+	}
+
 }

@@ -14,32 +14,39 @@ import db.DbException;
 import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
-
 public class SellerDaoimplJDBC implements SellerDao {
-
 	private Connection conn;
-
+	
 	public SellerDaoimplJDBC(Connection conn) {
 		this.conn = conn;
 	}
-
+	
 	@Override
 	public void insert(Seller obj) {
+		// TODO Auto-generated method stub
+		
 	}
-//@@ -27,8 +40,39 @@ 
-
+	@Override
+	public void update(Seller obj) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
 	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		
 	}
-
 	@Override
 	public Seller findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT seller.*,department.Name as DepName " + "FROM seller INNER JOIN department "
-							+ "ON seller.DepartmentId = department.Id " + "WHERE seller.Id = ?");
-
+					"SELECT seller.*,department.Name as DepName "
+					+ "FROM seller INNER JOIN department "
+					+ "ON seller.DepartmentId = department.Id "
+					+ "WHERE seller.Id = ?");
+			
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
@@ -48,14 +55,15 @@ public class SellerDaoimplJDBC implements SellerDao {
 				return obj;
 			}
 			return null;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		} finally {
+		}
+		finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
 	}
-
 	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
 		Seller obj = new Seller();
 		obj.setId(rs.getInt("Id"));
@@ -64,29 +72,18 @@ public class SellerDaoimplJDBC implements SellerDao {
 		obj.setBaseSalary(rs.getDouble("BaseSalary"));
 		obj.setBirthDate(rs.getDate("BirthDate"));
 		obj.setDepartment(dep);
-		return null;
+		return obj;
 	}
-
 	private Department instantiateDepartment(ResultSet rs) throws SQLException {
 		Department dep = new Department();
 		dep.setId(rs.getInt("DepartmentId"));
 		dep.setName(rs.getString("DepName"));
-		return null;
+		return dep;
 	}
-
 	@Override
 	public List<Seller> findAll() {
+		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void update(Seller obj) {
-
-	}
-
-	@Override
-	public void deletebyId(Integer id) {
-
 	}
 
 	@Override
@@ -95,10 +92,14 @@ public class SellerDaoimplJDBC implements SellerDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT seller.*,department.Name as DepName " + "FROM seller INNER JOIN department "
-							+ "ON seller.DepartmentId = department.Id " + "WHERE DepartmentId = ? " + "ORDER BY Name ");
+					"SELECT seller.*,department.Name as DepName "
+					+ "FROM seller INNER JOIN department "
+					+ "ON seller.DepartmentId = department.Id "
+					+ "WHERE DepartmentId = ? "
+					+ "ORDER BY Name");
 
 			st.setInt(1, department.getId());
+
 			rs = st.executeQuery();
 
 			List<Seller> list = new ArrayList<>();
@@ -117,12 +118,13 @@ public class SellerDaoimplJDBC implements SellerDao {
 				list.add(obj);
 			}
 			return list;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		} finally {
+		}
+		finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
 	}
-
 }
